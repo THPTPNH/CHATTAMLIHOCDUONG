@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Box</title>
+    <style>
+        /* Reset default styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+        }
+
+        /* Chat container */
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Chat header */
+        .chat-header {
+            background-color: #0078ff;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Chat messages */
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+        }
+
+        /* Individual message */
+        .message {
+            max-width: 80%;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* Sent message styling */
+        .message.sent {
+            align-self: flex-end;
+            background-color: #0078ff;
+            color: #fff;
+            border-top-right-radius: 0;
+        }
+
+        /* Received message styling */
+        .message.received {
+            align-self: flex-start;
+            background-color: #e5e5ea;
+            color: #333;
+            border-top-left-radius: 0;
+        }
+
+        /* Chat input */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        /* Input field */
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            outline: none;
+            margin-right: 10px;
+        }
+
+        /* Send button */
+        .chat-input button {
+            background-color: #0078ff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Chat header -->
+        <div class="chat-header">
+            Chat Box
+        </div>
+
+        <!-- Chat messages -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+
+        <!-- Chat input -->
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to send a message
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messageText = messageInput.value.trim();
+
+            if (messageText !== '') {
+                const messageContainer = document.getElementById('chatMessages');
+
+                // Create a message element for the sent message
+                const sentMessage = document.createElement('div');
+                sentMessage.classList.add('message', 'sent');
+                sentMessage.textContent = messageText;
+
+                // Append the sent message to the chat container
+                messageContainer.appendChild(sentMessage);
+
+                // Scroll to the latest message
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+
+                // Clear the input field
+                messageInput.value = '';
+
+                // Simulate a reply after 1 second
+                setTimeout(() => {
+                    const receivedMessage = document.createElement('div');
+                    receivedMessage.classList.add('message', 'received');
+                    receivedMessage.textContent = "hi ban";
+                    messageContainer.appendChild(receivedMessage);
+
+                    // Scroll to the latest message
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Add Enter key event listener for sending message
+        document.getElementById('messageInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

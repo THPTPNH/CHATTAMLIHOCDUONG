@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CHAT BOT </title>
+    <style>
+        /* Reset default styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+        }
+
+        /* Chat container */
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Chat header */
+        .chat-header {
+            background-color: #2e5394;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Chat messages */
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+        }
+
+        /* Individual message */
+        .message {
+            max-width: 80%;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* Sent message styling */
+        .message.sent {
+            align-self: flex-end;
+            background-color: #2e5394;
+            color: #fff;
+            border-top-right-radius: 0;
+        }
+
+        /* Received message styling */
+        .message.received {
+            align-self: flex-start;
+            background-color: #e5e5ea;
+            color: #333;
+            border-top-left-radius: 0;
+        }
+
+        /* Chat input */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        /* Input field */
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            outline: none;
+            margin-right: 10px;
+        }
+
+        /* Send button */
+        .chat-input button {
+            background-color: #2e5394;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-574-mexant.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
+
+</head>
+<body>
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a href="index.html" class="logo">
+                            <img src="assets/images/logochat.png" style="width:50%;height:50%" alt=""> 
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+   
+
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="chat-container">
+        <!-- Chat header -->
+        <div class="chat-header">
+            CHAT BOT
+        </div>
+
+        <!-- Chat messages -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+
+        <!-- Chat input -->
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="NHẬP TIN NHẮN">
+            <button onclick="sendMessage()"> 
+                <i class="fa fa-send-o" style="font-size:24px"></i>            </button>
+        </div>
+    </div>
+
+    <script>
+        // Function to send a message
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const messageText = messageInput.value.trim();
+
+            if (messageText !== '') {
+                const messageContainer = document.getElementById('chatMessages');
+
+                // Create a message element for the sent message
+                const sentMessage = document.createElement('div');
+                sentMessage.classList.add('message', 'sent');
+                sentMessage.textContent = messageText;
+
+                // Append the sent message to the chat container
+                messageContainer.appendChild(sentMessage);
+
+                // Scroll to the latest message
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+
+                // Clear the input field
+                messageInput.value = '';
+
+                // Simulate a reply after 1 second
+                setTimeout(() => {
+                    const receivedMessage = document.createElement('div');
+                    receivedMessage.classList.add('message', 'received');
+                    receivedMessage.textContent = "hi ban";
+                    messageContainer.appendChild(receivedMessage);
+
+                    // Scroll to the latest message
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Add Enter key event listener for sending message
+        document.getElementById('messageInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+
+
+<script>
+    // Các mẫu câu hỏi và câu trả lời
+    const responses = {
+        "hi":"Chào bạn! Tôi có thể giúp gì cho bạn về tâm lý?",
+        "xin chào": "Chào bạn! Tôi có thể giúp gì cho bạn về tâm lý?",
+        "tôi cảm thấy lo lắng": "Tôi hiểu cảm giác của bạn. Hãy thử hít thở sâu và nói cho tôi nghe về vấn đề của bạn.",
+        "buồn": "Rất tiếc khi nghe điều đó. Bạn có muốn chia sẻ thêm không?",
+        "tạm biệt": "Chào tạm biệt! Tôi luôn ở đây nếu bạn cần tư vấn thêm.",
+        "cảm ơn": "Không có gì! Tôi luôn sẵn sàng giúp đỡ bạn.",
+        "Tại sao tâm lý của học sinh lại thay đổi thất thường ở tuổi dậy thì":"Ở tuổi dậy thì, các em trải qua nhiều biến đổi về thể chất và hormone, điều này ảnh hưởng trực tiếp đến tâm trạng và cảm xúc của các em. Đồng thời, áp lực học tập, kỳ vọng của gia đình và xã hội cũng góp phần làm cho tâm lý của các em trở nên phức tạp hơn.",
+        "Làm thế nào để giúp học sinh hiểu rõ về tình cảm của bản thân? ":"Để giúp học sinh hiểu rõ về tình cảm của bản thân, chúng ta cần tạo ra một không gian an toàn để các em chia sẻ những cảm xúc của mình. Ngoài ra, việc cung cấp cho các em những thông tin khoa học về tình yêu và sự rung động cũng rất cần thiết"
+    };
+
+    // Hàm xử lý khi người dùng gửi tin nhắn
+    function sendMessage() {
+        const userInput = document.getElementById("messageInput").value.toLowerCase();
+        if (userInput.trim() === "") return;
+
+        displayMessage(userInput, "user");
+
+        // Tìm câu trả lời dựa trên từ khóa trong responses
+        let botResponse = "Xin lỗi, tôi không hiểu câu hỏi của bạn. Bạn có thể thử hỏi lại.";
+        for (let key in responses) {
+            if (userInput.includes(key)) {  // Kiểm tra từ khóa
+                botResponse = responses[key];
+                break;
+            }
+        }
+
+        // Hiển thị câu trả lời của chatbot
+        setTimeout(() => displayMessage(botResponse, "bot"), 500);
+        document.getElementById("messageInput").value = ""; // Xóa input sau khi gửi
+    }
+
+    // Hàm hiển thị tin nhắn trong giao diện chat
+    function displayMessage(message, sender) {
+        const chatbox = document.getElementById("chatMessages");
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", sender === "user" ? "sent" : "received");
+        messageElement.textContent = message;
+        chatbox.appendChild(messageElement);
+        chatbox.scrollTop = chatbox.scrollHeight; // Cuộn xuống cuối chatbox
+    }
+</script>
+</body>
+</html>
